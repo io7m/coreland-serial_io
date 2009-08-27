@@ -13,26 +13,42 @@ do
   ./$f >$f.out 2>&1
   ret=$?
 
-  if [ $ret -eq 0 ]
-  then
-    cmp $f.dat $f.exp >/dev/null 2>&1
-    ret=$?
-  fi
-
   case $ret in
     0)
-      echo passed $f
+      echo passed run $f
       lib_passed=`expr $lib_passed + 1` >/dev/null 2>&1
       ;;
     1)
-      echo failed $f
+      echo failed run $f
       lib_failed=`expr $lib_failed + 1` >/dev/null 2>&1
       ;;
     *)
-      echo crash  $f
+      echo crash run $f
       lib_failed_bad=`expr $lib_failed_bad + 1` >/dev/null 2>&1
       ;;
   esac
+
+  if [ $ret -eq 0 ]
+  then
+    lib_tests=`expr $lib_tests + 1` >/dev/null 2>&1
+    cmp $f.dat $f.exp >/dev/null 2>&1
+    ret=$?
+    case $ret in
+      0)
+        echo passed output $f
+        lib_passed=`expr $lib_passed + 1` >/dev/null 2>&1
+        ;;
+      1)
+        echo failed output $f
+        lib_failed=`expr $lib_failed + 1` >/dev/null 2>&1
+        ;;
+      *)
+        echo crash output $f
+        lib_failed_bad=`expr $lib_failed_bad + 1` >/dev/null 2>&1
+        ;;
+    esac
+  fi
+
 done
 cat <<EOF
 -- tests end --
