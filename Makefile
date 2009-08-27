@@ -12,6 +12,12 @@ UNIT_TESTS/t_r64_01 UNIT_TESTS/t_r64_01.ali UNIT_TESTS/t_r64_01.o \
 UNIT_TESTS/test.a UNIT_TESTS/test.ali UNIT_TESTS/test.o serial_io.ali \
 serial_io.o
 
+# Mkf-test
+tests:
+	(cd UNIT_TESTS && make)
+tests_clean:
+	(cd UNIT_TESTS && make clean)
+
 UNIT_TESTS/t_16_01:\
 ada-bind ada-link UNIT_TESTS/t_16_01.ald UNIT_TESTS/t_16_01.ali \
 UNIT_TESTS/test.ali serial_io.ali
@@ -167,7 +173,7 @@ ada-compile serial_io.adb serial_io.ads
 serial_io.o:\
 serial_io.ali
 
-clean-all: obj_clean ext_clean
+clean-all: tests_clean obj_clean ext_clean
 clean: obj_clean
 obj_clean:
 	rm -f UNIT_TESTS/t_16_01 UNIT_TESTS/t_16_01.ali UNIT_TESTS/t_16_01.o \
