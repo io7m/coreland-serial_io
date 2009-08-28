@@ -131,11 +131,16 @@ package Serial_IO is
     (Stream : not null access Ada.Streams.Root_Stream_Type'Class;
      Item   : in UTF8_String_t);
 
+  procedure UTF8_String_Attribute_Write
+    (Stream : not null access Ada.Streams.Root_Stream_Type'Class;
+     Item   : in UTF8_String_t);
+
   function UTF8_String_Attribute_Input
     (Stream : not null access Ada.Streams.Root_Stream_Type'Class)
       return UTF8_String_t;
 
   for UTF8_String_t'Output use UTF8_String_Attribute_Output;
+  for UTF8_String_t'Write use UTF8_String_Attribute_Write;
   for UTF8_String_t'Input  use UTF8_String_Attribute_Input;
 
   --

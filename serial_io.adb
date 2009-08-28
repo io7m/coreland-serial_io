@@ -472,6 +472,17 @@ package body Serial_IO is
     (Encoding_Method => System.WCh_Con.WCEM_UTF8);
 
   -- Encode Item to UTF8 and write to Stream.
+  procedure UTF8_String_Attribute_Write
+    (Stream : not null access Ada.Streams.Root_Stream_Type'Class;
+     Item   : in UTF8_String_t)
+  is
+    Temporary : constant String := UTF8_Encode.Encode_Wide_String (Wide_String (Item));
+  begin
+    -- Write encoded data to stream.
+    String'Write (Stream, Temporary);
+  end UTF8_String_Attribute_Write;
+
+  -- Encode Item to UTF8 and write to Stream.
   procedure UTF8_String_Attribute_Output
     (Stream : not null access Ada.Streams.Root_Stream_Type'Class;
      Item   : in UTF8_String_t)
