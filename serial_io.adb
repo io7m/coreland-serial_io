@@ -472,23 +472,18 @@ package body Serial_IO is
     (Encoding_Method => System.WCh_Con.WCEM_UTF8);
 
   -- Encode Item to UTF8 and write to Stream.
-  procedure UTF8_String_Attribute_Write
-    (Stream : not null access Ada.Streams.Root_Stream_Type'Class;
-     Item   : in UTF8_String_t)
-  is
-    Temporary : constant String := UTF8_Encode.Encode_Wide_String (Wide_String (Item));
-  begin
-    -- Write encoded data to stream.
-    String'Write (Stream, Temporary);
-  end UTF8_String_Attribute_Write;
-
-  -- Encode Item to UTF8 and write to Stream.
   procedure UTF8_String_Attribute_Output
     (Stream : not null access Ada.Streams.Root_Stream_Type'Class;
      Item   : in UTF8_String_t)
   is
     Temporary : constant String := UTF8_Encode.Encode_Wide_String (Wide_String (Item));
   begin
+    -- Write lower bound of original string.
+    Attribute_Write_32_BE (Stream, Item'First);
+
+    -- Write upper bound of original string.
+    Attribute_Write_32_BE (Stream, Item'Last);
+
     -- Write length of encoded data to stream.
     Attribute_Write_32_BE (Stream, Temporary'Length);
 
@@ -496,13 +491,56 @@ package body Serial_IO is
     String'Write (Stream, Temporary);
   end UTF8_String_Attribute_Output;
 
-  -- Decode UTF8 data from Stream, saving into Item.
+  -- Decoded UTF8 data from Stream, saving into Item.
+  procedure UTF8_String_Attribute_Read
+    (Stream : not null access Ada.Streams.Root_Stream_Type'Class;
+     Item   : out UTF8_String_t)
+  is
+    Length : Unsigned_32_t;
+    First  : Unsigned_32_t;
+    Last   : Unsigned_32_t;
+  begin
+    -- Read lower bound of original string.
+    Attribute_Read_32_BE (Stream, First);
+
+    if Item'First /= First then
+      raise Constraint_Error with "lower bound mismatch";
+    end if;
+
+    -- Read upper bound of original string.
+    Attribute_Read_32_BE (Stream, Last);
+
+    if Item'Last /= Last then
+      raise Constraint_Error with "upper bound mismatch";
+    end if;
+
+    -- Read length of encoded data from stream.
+    Attribute_Read_32_BE (Stream, Length);
+
+    declare
+      subtype Input_UTF8_Data_t is String (1 .. Positive (Length));
+      UTF8_Data : Input_UTF8_Data_t;
+    begin
+      Input_UTF8_Data_t'Read (Stream, UTF8_Data);
+      Item := UTF8_String_t (UTF8_Decode.Decode_Wide_String (UTF8_Data));
+    end;
+  end UTF8_String_Attribute_Read;
+
+  -- Return decoded UTF8 data from Stream.
   function UTF8_String_Attribute_Input
     (Stream : not null access Ada.Streams.Root_Stream_Type'Class)
       return UTF8_String_t
   is
     Length : Unsigned_32_t;
+    First  : Unsigned_32_t;
+    Last   : Unsigned_32_t;
   begin
+    -- Read lower bound of original string.
+    Attribute_Read_32_BE (Stream, First);
+
+    -- Read upper bound of original string.
+    Attribute_Read_32_BE (Stream, Last);
+
     -- Read length of encoded data from stream.
     Attribute_Read_32_BE (Stream, Length);
 
