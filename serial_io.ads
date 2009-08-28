@@ -126,6 +126,7 @@ package Serial_IO is
   subtype UTF8_String_Size_t  is Unsigned_32_t;
   subtype UTF8_String_Index_t is UTF8_String_Size_t range 1 .. UTF8_String_Size_t'Last;
   type    UTF8_String_t is array (UTF8_String_Index_t range <>) of Wide_Character;
+  pragma Pack (UTF8_String_t);
 
   procedure UTF8_String_Attribute_Output
     (Stream : not null access Ada.Streams.Root_Stream_Type'Class;
