@@ -553,4 +553,33 @@ package body Serial_IO is
     end;
   end UTF8_String_Attribute_Input;
 
+  --
+  -- Enumeration IO.
+  --
+
+  package body Serializable_Enumeration is
+
+    procedure Data_Attribute_Write
+      (Stream : not null access Ada.Streams.Root_Stream_Type'Class;
+       Item   : in Data_t) is
+    begin
+      Attribute_Write_32_BE
+        (Stream => Stream,
+         Item   => Data_t'Pos (Item));
+    end Data_Attribute_Write;
+
+    procedure Data_Attribute_Read
+      (Stream : not null access Ada.Streams.Root_Stream_Type'Class;
+       Item   : out Data_t)
+    is
+      Temporary : Unsigned_32_t;
+    begin
+      Attribute_Read_32_BE
+        (Stream => Stream,
+         Item   => Temporary);
+      Item := Data_t'Val (Temporary);
+    end Data_Attribute_Read;
+
+  end Serializable_Enumeration;
+
 end Serial_IO;

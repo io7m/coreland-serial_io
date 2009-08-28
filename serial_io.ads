@@ -197,4 +197,28 @@ package Serial_IO is
 
   end Optional_Element;
 
+  --
+  -- Enumeration IO.
+  --
+
+  generic
+    type Enumeration_Base is (<>);
+
+  package Serializable_Enumeration is
+
+    type Data_t is new Enumeration_Base;
+
+    procedure Data_Attribute_Write
+      (Stream : not null access Ada.Streams.Root_Stream_Type'Class;
+       Item   : in Data_t);
+
+    procedure Data_Attribute_Read
+      (Stream : not null access Ada.Streams.Root_Stream_Type'Class;
+       Item   : out Data_t);
+
+    for Data_t'Read use Data_Attribute_Read;
+    for Data_t'Write use Data_Attribute_Write;
+
+  end Serializable_Enumeration;
+
 end Serial_IO;
