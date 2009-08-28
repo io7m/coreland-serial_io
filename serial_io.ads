@@ -127,16 +127,16 @@ package Serial_IO is
   subtype UTF8_String_Index_t is UTF8_String_Size_t range 1 .. UTF8_String_Size_t'Last;
   type    UTF8_String_t is array (UTF8_String_Index_t range <>) of Wide_Character;
 
-  procedure UTF8_String_Attribute_Write
+  procedure UTF8_String_Attribute_Output
     (Stream : not null access Ada.Streams.Root_Stream_Type'Class;
      Item   : in UTF8_String_t);
 
-  procedure UTF8_String_Attribute_Read
-    (Stream : not null access Ada.Streams.Root_Stream_Type'Class;
-     Item   : out UTF8_String_t);
+  function UTF8_String_Attribute_Input
+    (Stream : not null access Ada.Streams.Root_Stream_Type'Class)
+      return UTF8_String_t;
 
-  for UTF8_String_t'Write use UTF8_String_Attribute_Write;
-  for UTF8_String_t'Read  use UTF8_String_Attribute_Read;
+  for UTF8_String_t'Output use UTF8_String_Attribute_Output;
+  for UTF8_String_t'Input  use UTF8_String_Attribute_Input;
 
   --
   -- Serializable UTF-8 bounded string type.

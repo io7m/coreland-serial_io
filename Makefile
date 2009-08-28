@@ -10,6 +10,7 @@ UNIT_TESTS/t_r16_01 UNIT_TESTS/t_r16_01.ali UNIT_TESTS/t_r16_01.o \
 UNIT_TESTS/t_r32_01 UNIT_TESTS/t_r32_01.ali UNIT_TESTS/t_r32_01.o \
 UNIT_TESTS/t_r64_01 UNIT_TESTS/t_r64_01.ali UNIT_TESTS/t_r64_01.o \
 UNIT_TESTS/t_utf8_01 UNIT_TESTS/t_utf8_01.ali UNIT_TESTS/t_utf8_01.o \
+UNIT_TESTS/t_utf8_02 UNIT_TESTS/t_utf8_02.ali UNIT_TESTS/t_utf8_02.o \
 UNIT_TESTS/test.a UNIT_TESTS/test.ali UNIT_TESTS/test.o serial_io.ali \
 serial_io.o
 
@@ -110,6 +111,19 @@ ada-compile UNIT_TESTS/t_utf8_01.adb serial_io.ali UNIT_TESTS/test.ali
 UNIT_TESTS/t_utf8_01.o:\
 UNIT_TESTS/t_utf8_01.ali
 
+UNIT_TESTS/t_utf8_02:\
+ada-bind ada-link UNIT_TESTS/t_utf8_02.ald UNIT_TESTS/t_utf8_02.ali \
+UNIT_TESTS/test.ali serial_io.ali
+	./ada-bind UNIT_TESTS/t_utf8_02.ali
+	./ada-link UNIT_TESTS/t_utf8_02 UNIT_TESTS/t_utf8_02.ali
+
+UNIT_TESTS/t_utf8_02.ali:\
+ada-compile UNIT_TESTS/t_utf8_02.adb serial_io.ali UNIT_TESTS/test.ali
+	./ada-compile UNIT_TESTS/t_utf8_02.adb
+
+UNIT_TESTS/t_utf8_02.o:\
+UNIT_TESTS/t_utf8_02.ali
+
 UNIT_TESTS/test.a:\
 cc-slib UNIT_TESTS/test.sld UNIT_TESTS/test.o
 	./cc-slib UNIT_TESTS/test UNIT_TESTS/test.o
@@ -197,6 +211,7 @@ obj_clean:
 	UNIT_TESTS/t_r32_01 UNIT_TESTS/t_r32_01.ali UNIT_TESTS/t_r32_01.o \
 	UNIT_TESTS/t_r64_01 UNIT_TESTS/t_r64_01.ali UNIT_TESTS/t_r64_01.o \
 	UNIT_TESTS/t_utf8_01 UNIT_TESTS/t_utf8_01.ali UNIT_TESTS/t_utf8_01.o \
+	UNIT_TESTS/t_utf8_02 UNIT_TESTS/t_utf8_02.ali UNIT_TESTS/t_utf8_02.o \
 	UNIT_TESTS/test.a UNIT_TESTS/test.ali UNIT_TESTS/test.o serial_io.ali \
 	serial_io.o
 ext_clean:
