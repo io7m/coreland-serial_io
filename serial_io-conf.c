@@ -17,6 +17,8 @@ static int str_diff(register const char *, register const char *);
 
 /* PROJECT SPECIFIC */
 
+#include "_sysinfo.h"
+
 const char progname[] = "serial_io-conf";
 
 void flag_incdir(void)

@@ -232,11 +232,11 @@ mk-adatype
 	./mk-adatype > conf-adatype.tmp && mv conf-adatype.tmp conf-adatype
 
 conf-cctype:\
-conf-cc mk-cctype
+conf-cc conf-cc mk-cctype
 	./mk-cctype > conf-cctype.tmp && mv conf-cctype.tmp conf-cctype
 
 conf-ldtype:\
-conf-ld mk-ldtype
+conf-ld conf-ld mk-ldtype
 	./mk-ldtype > conf-ldtype.tmp && mv conf-ldtype.tmp conf-ldtype
 
 conf-sosuffix:\
@@ -396,7 +396,7 @@ cc-link serial_io-conf.ld serial_io-conf.o ctxt/ctxt.a
 	./cc-link serial_io-conf serial_io-conf.o ctxt/ctxt.a
 
 serial_io-conf.o:\
-cc-compile serial_io-conf.c ctxt.h
+cc-compile serial_io-conf.c ctxt.h _sysinfo.h
 	./cc-compile serial_io-conf.c
 
 serial_io.a:\
