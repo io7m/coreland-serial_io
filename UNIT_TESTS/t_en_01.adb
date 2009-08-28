@@ -5,7 +5,7 @@ with Test;
 procedure T_en_01 is
   package Stream_IO renames Ada.Streams.Stream_IO;
 
-  -- Triggers 'literal not referenced' bug in GCC 4.4.0
+  -- Triggers 'literal not referenced' bug in GCC 4.4.0, 4.3.4
   pragma Warnings (Off);
   type En_Base_t is (Apple, Banana, Carrot, Durian, Eggplant, Fennel);
   pragma Warnings (On);
