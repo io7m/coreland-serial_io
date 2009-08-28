@@ -1,0 +1,4 @@
+This package provides a means to serialize Ada data structures using
+standard Streams. It essentially defines a set of strict,
+architecture-agnostic encoding rules and provides types and Stream
+attributes for reading and writing binary data adhering to those rules.
