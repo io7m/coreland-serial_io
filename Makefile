@@ -6,6 +6,7 @@ all:\
 UNIT_TESTS/t_16_01 UNIT_TESTS/t_16_01.ali UNIT_TESTS/t_16_01.o \
 UNIT_TESTS/t_32_01 UNIT_TESTS/t_32_01.ali UNIT_TESTS/t_32_01.o \
 UNIT_TESTS/t_64_01 UNIT_TESTS/t_64_01.ali UNIT_TESTS/t_64_01.o \
+UNIT_TESTS/t_en_01 UNIT_TESTS/t_en_01.ali UNIT_TESTS/t_en_01.o \
 UNIT_TESTS/t_r16_01 UNIT_TESTS/t_r16_01.ali UNIT_TESTS/t_r16_01.o \
 UNIT_TESTS/t_r32_01 UNIT_TESTS/t_r32_01.ali UNIT_TESTS/t_r32_01.o \
 UNIT_TESTS/t_r64_01 UNIT_TESTS/t_r64_01.ali UNIT_TESTS/t_r64_01.o \
@@ -99,6 +100,19 @@ ada-compile UNIT_TESTS/t_64_01.adb serial_io.ali UNIT_TESTS/test.ali
 
 UNIT_TESTS/t_64_01.o:\
 UNIT_TESTS/t_64_01.ali
+
+UNIT_TESTS/t_en_01:\
+ada-bind ada-link UNIT_TESTS/t_en_01.ald UNIT_TESTS/t_en_01.ali \
+UNIT_TESTS/test.ali serial_io.ali
+	./ada-bind UNIT_TESTS/t_en_01.ali
+	./ada-link UNIT_TESTS/t_en_01 UNIT_TESTS/t_en_01.ali
+
+UNIT_TESTS/t_en_01.ali:\
+ada-compile UNIT_TESTS/t_en_01.adb serial_io.ali UNIT_TESTS/test.ali
+	./ada-compile UNIT_TESTS/t_en_01.adb
+
+UNIT_TESTS/t_en_01.o:\
+UNIT_TESTS/t_en_01.ali
 
 UNIT_TESTS/t_r16_01:\
 ada-bind ada-link UNIT_TESTS/t_r16_01.ald UNIT_TESTS/t_r16_01.ali \
@@ -218,11 +232,11 @@ mk-adatype
 	./mk-adatype > conf-adatype.tmp && mv conf-adatype.tmp conf-adatype
 
 conf-cctype:\
-conf-cc conf-cc mk-cctype
+conf-cc mk-cctype
 	./mk-cctype > conf-cctype.tmp && mv conf-cctype.tmp conf-cctype
 
 conf-ldtype:\
-conf-ld conf-ld mk-ldtype
+conf-ld mk-ldtype
 	./mk-ldtype > conf-ldtype.tmp && mv conf-ldtype.tmp conf-ldtype
 
 conf-sosuffix:\
@@ -402,6 +416,7 @@ obj_clean:
 	rm -f UNIT_TESTS/t_16_01 UNIT_TESTS/t_16_01.ali UNIT_TESTS/t_16_01.o \
 	UNIT_TESTS/t_32_01 UNIT_TESTS/t_32_01.ali UNIT_TESTS/t_32_01.o \
 	UNIT_TESTS/t_64_01 UNIT_TESTS/t_64_01.ali UNIT_TESTS/t_64_01.o \
+	UNIT_TESTS/t_en_01 UNIT_TESTS/t_en_01.ali UNIT_TESTS/t_en_01.o \
 	UNIT_TESTS/t_r16_01 UNIT_TESTS/t_r16_01.ali UNIT_TESTS/t_r16_01.o \
 	UNIT_TESTS/t_r32_01 UNIT_TESTS/t_r32_01.ali UNIT_TESTS/t_r32_01.o \
 	UNIT_TESTS/t_r64_01 UNIT_TESTS/t_r64_01.ali UNIT_TESTS/t_r64_01.o \
@@ -413,9 +428,8 @@ obj_clean:
 	ctxt/fakeroot.o ctxt/incdir.c ctxt/incdir.o ctxt/repos.c ctxt/repos.o \
 	ctxt/slibdir.c ctxt/slibdir.o ctxt/version.c ctxt/version.o deinstaller \
 	deinstaller.o install-core.o install-error.o install-posix.o install-win32.o \
-	install.a installer installer.o instchk instchk.o insthier.o serial_io-conf \
-	serial_io-conf.o serial_io.a serial_io.ali
-	rm -f serial_io.o
+	install.a installer installer.o instchk instchk.o insthier.o
+	rm -f serial_io-conf serial_io-conf.o serial_io.a serial_io.ali serial_io.o
 ext_clean:
 	rm -f conf-adatype conf-cctype conf-ldtype conf-sosuffix conf-systype mk-ctxt
 
