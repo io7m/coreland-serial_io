@@ -17,7 +17,7 @@ static int str_diff(register const char *, register const char *);
 
 /* PROJECT SPECIFIC */
 
-#include "_sysinfo.h"
+#include "_sd_sysinfo.h"
 
 const char progname[] = "serial_io-conf";
 
