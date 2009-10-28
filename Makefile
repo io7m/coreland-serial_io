@@ -44,23 +44,26 @@ tests:
 tests_clean:
 	(cd UNIT_TESTS && make clean)
 
-# -- SYSDEPS start
-_sysinfo.h:
-	@echo SYSDEPS sysinfo run create _sysinfo.h 
-	@(cd SYSDEPS/modules/sysinfo && ./run)
+#----------------------------------------------------------------------
+# SYSDEPS start
+
+_sd_sysinfo.h:
+	@echo SYSDEPS sd-sysinfo run create _sd_sysinfo.h 
+	@(cd SYSDEPS && ./sd-run modules/sd-sysinfo)
 
 
-sysinfo_clean:
-	@echo SYSDEPS sysinfo clean _sysinfo.h 
-	@(cd SYSDEPS/modules/sysinfo && ./clean)
+sd-sysinfo_clean:
+	@echo SYSDEPS sd-sysinfo clean _sd_sysinfo.h 
+	@(cd SYSDEPS && ./sd-clean modules/sd-sysinfo)
 
 
 sysdeps_clean:\
-sysinfo_clean \
+sd-sysinfo_clean \
 
 
-# -- SYSDEPS end
 
+# SYSDEPS end
+#----------------------------------------------------------------------
 
 UNIT_TESTS/t_16_01:\
 ada-bind ada-link UNIT_TESTS/t_16_01.ald UNIT_TESTS/t_16_01.ali \
@@ -68,12 +71,9 @@ UNIT_TESTS/test.ali serial_io.ali
 	./ada-bind UNIT_TESTS/t_16_01.ali
 	./ada-link UNIT_TESTS/t_16_01 UNIT_TESTS/t_16_01.ali
 
-UNIT_TESTS/t_16_01.ali:\
+UNIT_TESTS/t_16_01.o UNIT_TESTS/t_16_01.ali:\
 ada-compile UNIT_TESTS/t_16_01.adb serial_io.ali UNIT_TESTS/test.ali
 	./ada-compile UNIT_TESTS/t_16_01.adb
-
-UNIT_TESTS/t_16_01.o:\
-UNIT_TESTS/t_16_01.ali
 
 UNIT_TESTS/t_32_01:\
 ada-bind ada-link UNIT_TESTS/t_32_01.ald UNIT_TESTS/t_32_01.ali \
@@ -81,12 +81,9 @@ UNIT_TESTS/test.ali serial_io.ali
 	./ada-bind UNIT_TESTS/t_32_01.ali
 	./ada-link UNIT_TESTS/t_32_01 UNIT_TESTS/t_32_01.ali
 
-UNIT_TESTS/t_32_01.ali:\
+UNIT_TESTS/t_32_01.o UNIT_TESTS/t_32_01.ali:\
 ada-compile UNIT_TESTS/t_32_01.adb serial_io.ali UNIT_TESTS/test.ali
 	./ada-compile UNIT_TESTS/t_32_01.adb
-
-UNIT_TESTS/t_32_01.o:\
-UNIT_TESTS/t_32_01.ali
 
 UNIT_TESTS/t_64_01:\
 ada-bind ada-link UNIT_TESTS/t_64_01.ald UNIT_TESTS/t_64_01.ali \
@@ -94,12 +91,9 @@ UNIT_TESTS/test.ali serial_io.ali
 	./ada-bind UNIT_TESTS/t_64_01.ali
 	./ada-link UNIT_TESTS/t_64_01 UNIT_TESTS/t_64_01.ali
 
-UNIT_TESTS/t_64_01.ali:\
+UNIT_TESTS/t_64_01.o UNIT_TESTS/t_64_01.ali:\
 ada-compile UNIT_TESTS/t_64_01.adb serial_io.ali UNIT_TESTS/test.ali
 	./ada-compile UNIT_TESTS/t_64_01.adb
-
-UNIT_TESTS/t_64_01.o:\
-UNIT_TESTS/t_64_01.ali
 
 UNIT_TESTS/t_en_01:\
 ada-bind ada-link UNIT_TESTS/t_en_01.ald UNIT_TESTS/t_en_01.ali \
@@ -107,12 +101,9 @@ UNIT_TESTS/test.ali serial_io.ali
 	./ada-bind UNIT_TESTS/t_en_01.ali
 	./ada-link UNIT_TESTS/t_en_01 UNIT_TESTS/t_en_01.ali
 
-UNIT_TESTS/t_en_01.ali:\
+UNIT_TESTS/t_en_01.o UNIT_TESTS/t_en_01.ali:\
 ada-compile UNIT_TESTS/t_en_01.adb serial_io.ali UNIT_TESTS/test.ali
 	./ada-compile UNIT_TESTS/t_en_01.adb
-
-UNIT_TESTS/t_en_01.o:\
-UNIT_TESTS/t_en_01.ali
 
 UNIT_TESTS/t_r16_01:\
 ada-bind ada-link UNIT_TESTS/t_r16_01.ald UNIT_TESTS/t_r16_01.ali \
@@ -120,12 +111,9 @@ UNIT_TESTS/test.ali serial_io.ali
 	./ada-bind UNIT_TESTS/t_r16_01.ali
 	./ada-link UNIT_TESTS/t_r16_01 UNIT_TESTS/t_r16_01.ali
 
-UNIT_TESTS/t_r16_01.ali:\
+UNIT_TESTS/t_r16_01.o UNIT_TESTS/t_r16_01.ali:\
 ada-compile UNIT_TESTS/t_r16_01.adb serial_io.ali UNIT_TESTS/test.ali
 	./ada-compile UNIT_TESTS/t_r16_01.adb
-
-UNIT_TESTS/t_r16_01.o:\
-UNIT_TESTS/t_r16_01.ali
 
 UNIT_TESTS/t_r32_01:\
 ada-bind ada-link UNIT_TESTS/t_r32_01.ald UNIT_TESTS/t_r32_01.ali \
@@ -133,12 +121,9 @@ UNIT_TESTS/test.ali serial_io.ali
 	./ada-bind UNIT_TESTS/t_r32_01.ali
 	./ada-link UNIT_TESTS/t_r32_01 UNIT_TESTS/t_r32_01.ali
 
-UNIT_TESTS/t_r32_01.ali:\
+UNIT_TESTS/t_r32_01.o UNIT_TESTS/t_r32_01.ali:\
 ada-compile UNIT_TESTS/t_r32_01.adb serial_io.ali UNIT_TESTS/test.ali
 	./ada-compile UNIT_TESTS/t_r32_01.adb
-
-UNIT_TESTS/t_r32_01.o:\
-UNIT_TESTS/t_r32_01.ali
 
 UNIT_TESTS/t_r64_01:\
 ada-bind ada-link UNIT_TESTS/t_r64_01.ald UNIT_TESTS/t_r64_01.ali \
@@ -146,12 +131,9 @@ UNIT_TESTS/test.ali serial_io.ali
 	./ada-bind UNIT_TESTS/t_r64_01.ali
 	./ada-link UNIT_TESTS/t_r64_01 UNIT_TESTS/t_r64_01.ali
 
-UNIT_TESTS/t_r64_01.ali:\
+UNIT_TESTS/t_r64_01.o UNIT_TESTS/t_r64_01.ali:\
 ada-compile UNIT_TESTS/t_r64_01.adb serial_io.ali UNIT_TESTS/test.ali
 	./ada-compile UNIT_TESTS/t_r64_01.adb
-
-UNIT_TESTS/t_r64_01.o:\
-UNIT_TESTS/t_r64_01.ali
 
 UNIT_TESTS/t_utf8_01:\
 ada-bind ada-link UNIT_TESTS/t_utf8_01.ald UNIT_TESTS/t_utf8_01.ali \
@@ -159,12 +141,9 @@ UNIT_TESTS/test.ali serial_io.ali
 	./ada-bind UNIT_TESTS/t_utf8_01.ali
 	./ada-link UNIT_TESTS/t_utf8_01 UNIT_TESTS/t_utf8_01.ali
 
-UNIT_TESTS/t_utf8_01.ali:\
+UNIT_TESTS/t_utf8_01.o UNIT_TESTS/t_utf8_01.ali:\
 ada-compile UNIT_TESTS/t_utf8_01.adb serial_io.ali UNIT_TESTS/test.ali
 	./ada-compile UNIT_TESTS/t_utf8_01.adb
-
-UNIT_TESTS/t_utf8_01.o:\
-UNIT_TESTS/t_utf8_01.ali
 
 UNIT_TESTS/t_utf8_02:\
 ada-bind ada-link UNIT_TESTS/t_utf8_02.ald UNIT_TESTS/t_utf8_02.ali \
@@ -172,12 +151,9 @@ UNIT_TESTS/test.ali serial_io.ali
 	./ada-bind UNIT_TESTS/t_utf8_02.ali
 	./ada-link UNIT_TESTS/t_utf8_02 UNIT_TESTS/t_utf8_02.ali
 
-UNIT_TESTS/t_utf8_02.ali:\
+UNIT_TESTS/t_utf8_02.o UNIT_TESTS/t_utf8_02.ali:\
 ada-compile UNIT_TESTS/t_utf8_02.adb serial_io.ali UNIT_TESTS/test.ali
 	./ada-compile UNIT_TESTS/t_utf8_02.adb
-
-UNIT_TESTS/t_utf8_02.o:\
-UNIT_TESTS/t_utf8_02.ali
 
 UNIT_TESTS/t_utf8_03:\
 ada-bind ada-link UNIT_TESTS/t_utf8_03.ald UNIT_TESTS/t_utf8_03.ali \
@@ -185,23 +161,17 @@ UNIT_TESTS/test.ali serial_io.ali
 	./ada-bind UNIT_TESTS/t_utf8_03.ali
 	./ada-link UNIT_TESTS/t_utf8_03 UNIT_TESTS/t_utf8_03.ali
 
-UNIT_TESTS/t_utf8_03.ali:\
+UNIT_TESTS/t_utf8_03.o UNIT_TESTS/t_utf8_03.ali:\
 ada-compile UNIT_TESTS/t_utf8_03.adb serial_io.ali UNIT_TESTS/test.ali
 	./ada-compile UNIT_TESTS/t_utf8_03.adb
-
-UNIT_TESTS/t_utf8_03.o:\
-UNIT_TESTS/t_utf8_03.ali
 
 UNIT_TESTS/test.a:\
 cc-slib UNIT_TESTS/test.sld UNIT_TESTS/test.o
 	./cc-slib UNIT_TESTS/test UNIT_TESTS/test.o
 
-UNIT_TESTS/test.ali:\
+UNIT_TESTS/test.o UNIT_TESTS/test.ali:\
 ada-compile UNIT_TESTS/test.adb UNIT_TESTS/test.ads
 	./ada-compile UNIT_TESTS/test.adb
-
-UNIT_TESTS/test.o:\
-UNIT_TESTS/test.ali
 
 ada-bind:\
 conf-adabind conf-systype conf-adatype conf-adabflags conf-adafflist flags-cwd
@@ -232,11 +202,11 @@ mk-adatype
 	./mk-adatype > conf-adatype.tmp && mv conf-adatype.tmp conf-adatype
 
 conf-cctype:\
-conf-cc mk-cctype
+conf-cc conf-cc mk-cctype
 	./mk-cctype > conf-cctype.tmp && mv conf-cctype.tmp conf-cctype
 
 conf-ldtype:\
-conf-ld mk-ldtype
+conf-ld conf-ld mk-ldtype
 	./mk-ldtype > conf-ldtype.tmp && mv conf-ldtype.tmp conf-ldtype
 
 conf-sosuffix:\
@@ -396,19 +366,16 @@ cc-link serial_io-conf.ld serial_io-conf.o ctxt/ctxt.a
 	./cc-link serial_io-conf serial_io-conf.o ctxt/ctxt.a
 
 serial_io-conf.o:\
-cc-compile serial_io-conf.c ctxt.h _sysinfo.h
+cc-compile serial_io-conf.c ctxt.h _sd_sysinfo.h
 	./cc-compile serial_io-conf.c
 
 serial_io.a:\
 cc-slib serial_io.sld serial_io.o
 	./cc-slib serial_io serial_io.o
 
-serial_io.ali:\
+serial_io.o serial_io.ali:\
 ada-compile serial_io.adb serial_io.ads
 	./ada-compile serial_io.adb
-
-serial_io.o:\
-serial_io.ali
 
 clean-all: sysdeps_clean tests_clean obj_clean ext_clean
 clean: obj_clean
