@@ -9,7 +9,7 @@ package Serial_IO is
 
   type Unsigned_8_t is mod 2 ** 8;
   for  Unsigned_8_t'Size use 8;
-  for  Unsigned_8_t'Alignment use 8;
+  for  Unsigned_8_t'Alignment use 1;
 
   --
   -- 16
