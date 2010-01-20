@@ -43,7 +43,9 @@ begin
 
   R_t'Output (Stream_IO.Stream (Output), R);
 
+  pragma Warnings (Off);
   Stream_IO.Close (Output);
+  pragma Warnings (On);
 
   Stream_IO.Open
     (Name => "t_r64_01.dat",
@@ -54,5 +56,8 @@ begin
 
   Test.Assert (S = R);
 
+  pragma Warnings (Off);
   Stream_IO.Close (Input);
+  pragma Warnings (On);
+
 end T_R64_01;

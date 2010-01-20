@@ -22,7 +22,9 @@ begin
   Serial_IO.Unsigned_32_t'Output (Stream_IO.Stream (Output), 16#0000_7fff#);
   Serial_IO.Unsigned_32_t'Output (Stream_IO.Stream (Output), 16#0000_0000#);
 
+  pragma Warnings (Off);
   Stream_IO.Close (Output);
+  pragma Warnings (On);
 
   Stream_IO.Open
     (Name => "t_32_01.dat",
@@ -40,5 +42,8 @@ begin
   V := Serial_IO.Unsigned_32_t'Input (Stream_IO.Stream (Input));
   Test.Assert (V = 16#0000_0000#);
 
+  pragma Warnings (Off);
   Stream_IO.Close (Input);
+  pragma Warnings (On);
+
 end T_32_01;

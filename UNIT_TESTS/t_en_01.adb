@@ -31,7 +31,9 @@ begin
   En_t'Write (Stream_IO.Stream (Output), Eggplant);
   En_t'Write (Stream_IO.Stream (Output), Fennel);
 
+  pragma Warnings (Off);
   Stream_IO.Close (Output);
+  pragma Warnings (On);
 
   Stream_IO.Open
     (Name => "t_en_01.dat",
@@ -51,5 +53,8 @@ begin
   En_t'Read (Stream_IO.Stream (Input), V);
   Test.Assert (V = Fennel);
 
+  pragma Warnings (Off);
   Stream_IO.Close (Input);
+  pragma Warnings (On);
+
 end T_en_01;

@@ -22,7 +22,9 @@ begin
 
   S_t'Write (Stream_IO.Stream (Output), S);
 
+  pragma Warnings (Off);
   Stream_IO.Close (Output);
+  pragma Warnings (On);
 
   Stream_IO.Open
     (Name => "t_utf8_03.dat",
@@ -32,5 +34,8 @@ begin
   T := S_t'Input (Stream_IO.Stream (Input));
   Test.Assert (S = T);
 
+  pragma Warnings (Off);
   Stream_IO.Close (Input);
+  pragma Warnings (On);
+
 end T_UTF8_03;
