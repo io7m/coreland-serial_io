@@ -120,6 +120,76 @@ package Serial_IO is
   for Unsigned_64_t'Read  use Attribute_Read_64_BE;
 
   --
+  -- 32
+  --
+
+  type Float_32_t is digits 6;
+  for Float_32_t'Size use 32;
+  for Float_32_t'Alignment use 4;
+
+  procedure Pack_Float_32_BE
+    (Input  : in     Float_32_t;
+     Output :    out Unsigned_32_Packed_t);
+
+  procedure Pack_Float_32_LE
+    (Input  : in     Float_32_t;
+     Output :    out Unsigned_32_Packed_t);
+
+  procedure Unpack_Float_32_BE
+    (Input  : in     Unsigned_32_Packed_t;
+     Output :    out Float_32_t);
+
+  procedure Unpack_Float_32_LE
+    (Input  : in     Unsigned_32_Packed_t;
+     Output :    out Float_32_t);
+
+  procedure Attribute_Write_Float_32_BE
+    (Stream : not null access Ada.Streams.Root_Stream_Type'Class;
+     Item   : in Float_32_t);
+
+  procedure Attribute_Read_Float_32_BE
+    (Stream : not null access Ada.Streams.Root_Stream_Type'Class;
+     Item   : out Float_32_t);
+
+  for Float_32_t'Write use Attribute_Write_Float_32_BE;
+  for Float_32_t'Read  use Attribute_Read_Float_32_BE;
+
+  --
+  -- 64
+  --
+
+  type Float_64_t is digits 15;
+  for Float_64_t'Size use 64;
+  for Float_64_t'Alignment use 8;
+
+  procedure Pack_Float_64_BE
+    (Input  : in     Float_64_t;
+     Output :    out Unsigned_64_Packed_t);
+
+  procedure Pack_Float_64_LE
+    (Input  : in     Float_64_t;
+     Output :    out Unsigned_64_Packed_t);
+
+  procedure Unpack_Float_64_BE
+    (Input  : in     Unsigned_64_Packed_t;
+     Output :    out Float_64_t);
+
+  procedure Unpack_Float_64_LE
+    (Input  : in     Unsigned_64_Packed_t;
+     Output :    out Float_64_t);
+
+  procedure Attribute_Write_Float_64_BE
+    (Stream : not null access Ada.Streams.Root_Stream_Type'Class;
+     Item   : in Float_64_t);
+
+  procedure Attribute_Read_Float_64_BE
+    (Stream : not null access Ada.Streams.Root_Stream_Type'Class;
+     Item   : out Float_64_t);
+
+  for Float_64_t'Write use Attribute_Write_Float_64_BE;
+  for Float_64_t'Read  use Attribute_Read_Float_64_BE;
+
+  --
   -- UTF-8 encoded Wide_String type.
   --
 

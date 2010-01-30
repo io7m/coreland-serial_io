@@ -426,6 +426,204 @@ package body Serial_IO is
   end Attribute_Read_64_BE;
 
   --
+  -- Float_32
+  --
+
+  function Float_To_Integer_32 is new Ada.Unchecked_Conversion
+    (Source => Float_32_t,
+     Target => Unsigned_32_t);
+
+  function Integer_32_To_Float is new Ada.Unchecked_Conversion
+    (Source => Unsigned_32_t,
+     Target => Float_32_t);
+
+  procedure Pack_Float_32_BE
+    (Input  : in     Float_32_t;
+     Output :    out Unsigned_32_Packed_t) is
+  begin
+    Pack_32_BE
+      (Input  => Float_To_Integer_32 (Input),
+       Output => Output);
+  end Pack_Float_32_BE;
+
+  procedure Pack_Float_32_LE
+    (Input  : in     Float_32_t;
+     Output :    out Unsigned_32_Packed_t) is
+  begin
+    Pack_32_LE
+      (Input  => Float_To_Integer_32 (Input),
+       Output => Output);
+  end Pack_Float_32_LE;
+
+  procedure Unpack_Float_32_BE
+    (Input  : in     Unsigned_32_Packed_t;
+     Output :    out Float_32_t)
+  is
+    Temporary : Unsigned_32_t;
+  begin
+    Unpack_32_BE
+      (Input  => Input,
+       Output => Temporary);
+    Output := Integer_32_To_Float (Temporary);
+  end Unpack_Float_32_BE;
+
+  procedure Unpack_Float_32_LE
+    (Input  : in     Unsigned_32_Packed_t;
+     Output :    out Float_32_t)
+  is
+    Temporary : Unsigned_32_t;
+  begin
+    Unpack_32_LE
+      (Input  => Input,
+       Output => Temporary);
+    Output := Integer_32_To_Float (Temporary);
+  end Unpack_Float_32_LE;
+
+  procedure Attribute_Write_Float_32_BE
+    (Stream : not null access Ada.Streams.Root_Stream_Type'Class;
+     Item   : in Float_32_t)
+  is
+    subtype Source_t is Unsigned_32_Packed_t;
+    subtype Target_t is Ada.Streams.Stream_Element_Array (1 .. 4);
+
+    function Convert is new Ada.Unchecked_Conversion
+      (Source => Source_t,
+       Target => Target_t);
+
+    Packed : Unsigned_32_Packed_t;
+  begin
+    Pack_Float_32_BE (Item, Packed);
+    Ada.Streams.Write
+      (Stream => Stream.all,
+       Item   => Convert (Packed));
+  end Attribute_Write_Float_32_BE;
+
+  procedure Attribute_Read_Float_32_BE
+    (Stream : not null access Ada.Streams.Root_Stream_Type'Class;
+     Item   : out Float_32_t)
+  is
+    subtype Source_t is Ada.Streams.Stream_Element_Array (1 .. 4);
+    subtype Target_t is Unsigned_32_Packed_t;
+
+    function Convert is new Ada.Unchecked_Conversion
+      (Source => Source_t,
+       Target => Target_t);
+
+    Packed : Source_t;
+    Last   : Ada.Streams.Stream_Element_Offset;
+  begin
+    Ada.Streams.Read
+      (Stream => Stream.all,
+       Item   => Packed,
+       Last   => Last);
+    if Last /= 4 then
+      raise Constraint_Error;
+    end if;
+    Unpack_Float_32_BE
+      (Input  => Convert (Packed),
+       Output => Item);
+  end Attribute_Read_Float_32_BE;
+
+  --
+  -- Float_64
+  --
+
+  function Float_To_Integer_64 is new Ada.Unchecked_Conversion
+    (Source => Float_64_t,
+     Target => Unsigned_64_t);
+
+  function Integer_64_To_Float is new Ada.Unchecked_Conversion
+    (Source => Unsigned_64_t,
+     Target => Float_64_t);
+
+  procedure Pack_Float_64_BE
+    (Input  : in     Float_64_t;
+     Output :    out Unsigned_64_Packed_t) is
+  begin
+    Pack_64_BE
+      (Input  => Float_To_Integer_64 (Input),
+       Output => Output);
+  end Pack_Float_64_BE;
+
+  procedure Pack_Float_64_LE
+    (Input  : in     Float_64_t;
+     Output :    out Unsigned_64_Packed_t) is
+  begin
+    Pack_64_LE
+      (Input  => Float_To_Integer_64 (Input),
+       Output => Output);
+  end Pack_Float_64_LE;
+
+  procedure Unpack_Float_64_BE
+    (Input  : in     Unsigned_64_Packed_t;
+     Output :    out Float_64_t)
+  is
+    Temporary : Unsigned_64_t;
+  begin
+    Unpack_64_BE
+      (Input  => Input,
+       Output => Temporary);
+    Output := Integer_64_To_Float (Temporary);
+  end Unpack_Float_64_BE;
+
+  procedure Unpack_Float_64_LE
+    (Input  : in     Unsigned_64_Packed_t;
+     Output :    out Float_64_t)
+  is
+    Temporary : Unsigned_64_t;
+  begin
+    Unpack_64_LE
+      (Input  => Input,
+       Output => Temporary);
+    Output := Integer_64_To_Float (Temporary);
+  end Unpack_Float_64_LE;
+
+  procedure Attribute_Write_Float_64_BE
+    (Stream : not null access Ada.Streams.Root_Stream_Type'Class;
+     Item   : in Float_64_t)
+  is
+    subtype Source_t is Unsigned_64_Packed_t;
+    subtype Target_t is Ada.Streams.Stream_Element_Array (1 .. 8);
+
+    function Convert is new Ada.Unchecked_Conversion
+      (Source => Source_t,
+       Target => Target_t);
+
+    Packed : Unsigned_64_Packed_t;
+  begin
+    Pack_Float_64_BE (Item, Packed);
+    Ada.Streams.Write
+      (Stream => Stream.all,
+       Item   => Convert (Packed));
+  end Attribute_Write_Float_64_BE;
+
+  procedure Attribute_Read_Float_64_BE
+    (Stream : not null access Ada.Streams.Root_Stream_Type'Class;
+     Item   : out Float_64_t)
+  is
+    subtype Source_t is Ada.Streams.Stream_Element_Array (1 .. 8);
+    subtype Target_t is Unsigned_64_Packed_t;
+
+    function Convert is new Ada.Unchecked_Conversion
+      (Source => Source_t,
+       Target => Target_t);
+
+    Packed : Source_t;
+    Last   : Ada.Streams.Stream_Element_Offset;
+  begin
+    Ada.Streams.Read
+      (Stream => Stream.all,
+       Item   => Packed,
+       Last   => Last);
+    if Last /= 8 then
+      raise Constraint_Error;
+    end if;
+    Unpack_Float_64_BE
+      (Input  => Convert (Packed),
+       Output => Item);
+  end Attribute_Read_Float_64_BE;
+
+  --
   -- Optional data element package.
   --
 
